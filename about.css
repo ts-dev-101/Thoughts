@@ -1,0 +1,45 @@
+body{
+  background: #000;
+}
+
+/* About Section Styles */
+.about-container {
+  background-color: #121212;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.about-content h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.about-content h3 {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.about-content p {
+  line-height: 1.6;
+}
+
+.about-content ul {
+  list-style: disc;
+  margin-left: 20px;
+}
+
+.about-content li {
+  margin-bottom: 10px;
+}
+
+.about-content a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.about-content a:hover {
+  text-decoration: underline;
+}

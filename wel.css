@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: left; /* Align text to the left */
+    background: #121212; /* Light background for the container */
+    border-radius: 0px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Fixed width for better alignment */
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #34495e; /* Darker text color */
+    margin: 0;
+}
+
+.secret-wish {
+    font-size: 1.2em;
+    color: #7f8c8d; /* Light grey text color */
+    margin: 10px 0;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.btn {
+    background-color: #3498db; /* Button background color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px; /* Margin between buttons */
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #2980b9; /* Darker button color on hover */
+}

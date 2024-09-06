@@ -1,0 +1,150 @@
+body {
+  background-color: #000;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 350px;
+  height: 95vh;
+  padding: 20px;
+  background-color: #121212;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.add-post-btn {
+  font-size: 24px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.add-post-btn:hover {
+  background-color: #0056b3;
+}
+
+#posts-container {
+  height: 90vh;
+  max-height: 1000px; /* Adjust height as needed */
+  overflow-y: auto; /* Enables vertical scrolling */
+  margin-bottom: 30px; /* Space between posts and input field */
+}
+
+.post-box {
+  background-color: #1e1e1e;
+  padding: 15px;
+  border-radius: 10px;
+  min-height: 40px;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+}
+
+.timestamp {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #151515;
+  padding: 25px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  position: relative;
+}
+
+.popup-content input[type="text"] {
+  width: calc(100% - 22px);
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #2a2a2a;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.popup-content button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.popup-content button:hover {
+  background-color: #0056b3;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+.like-btn {
+  background-color: transparent;
+  color: #007bff;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: 0px;
+}
+
+.like-btn:hover {
+  color: #0056b3;
+}
+
+.like-count {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #888;
+  margin-left: 0px;
+}
