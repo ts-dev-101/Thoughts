@@ -32,6 +32,13 @@ h1 {
   margin: 0;
 }
 
+.topbutton{
+  display: flex;
+  width: 90px;
+  padding: 8px;
+  justify-content: space-between;
+}
+
 .add-post-btn {
   font-size: 24px;
   background-color: #007bff;
@@ -79,7 +86,16 @@ h1 {
 }
 
 .new-post {
-  background-color: #333; /* Darker background for new posts */
+  color: black;
+  background-color: #fff; /* Darker background for new posts */
+}
+
+.new-post .timestamp{
+  color: wheat;
+}
+
+.new-post .like-count{
+  color: wheat;
 }
 
 /* Optional: Add a subtle animation when a post is added */
@@ -214,4 +230,48 @@ h1 {
   font-size: 12px;
   color: #888;
   margin-left: 0px;
+}
+
+/* Add this to your style.css file */
+.search-btn {
+  font-size: 24px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#search-popup {
+  display: none;
+  
+}
+
+
+#search-popup .popup-content {
+  width: 80%;
+}
+
+#search-result {
+  margin-top: 20px;
+  font-size: 0.9em;
+  background-color: red;
+}
+
+#search-result .comment-btn {
+  background: #000;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 10px;
+  padding: 10px;
+}
+
+#search-result .like-count {
+  font-size: 0.8em;
 }
