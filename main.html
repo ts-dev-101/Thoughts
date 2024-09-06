@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <!-- Popup Form -->
+  <!-- Popup Form for Adding Posts -->
   <div id="popup" class="popup">
     <div class="popup-content">
       <span class="close-btn" onclick="closePopup()">&times;</span>
@@ -27,7 +27,17 @@
     </div>
   </div>
 
+  <!-- Popup Form for Comments -->
+  <div id="comment-popup" class="popup">
+    <div class="popup-content">
+      <span class="close-btn" onclick="closeCommentPopup()">&times;</span>
+      <input type="text" id="comment-message" placeholder="Add a comment...">
+      <button id="comment-post-btn" onclick="sendComment()">Post Comment</button>
+      <div id="comments-container"></div>
+    </div>
+  </div>
+
   <!-- Firebase JS SDKs -->
-  <script type="module" src="app_like.js"></script>
+  <script type="module" src="app_comments.js"></script>
 </body>
 </html>
