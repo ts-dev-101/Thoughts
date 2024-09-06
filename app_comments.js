@@ -146,6 +146,54 @@ function getComments(postId) {
   });
 }
 
+// Open the search popup
+function openSearchPopup() {
+  document.getElementById('search-popup').style.display = 'flex';
+}
+
+// Close the search popup
+function closeSearchPopup() {
+  document.getElementById('search-popup').style.display = 'none';
+}
+
+// Search posts based on input text
+function searchPosts() {
+  const searchText = document.getElementById('search-input').value.trim();
+  const searchResults = document.getElementById('search-results');
+
+  if (searchText !== '') {
+    const searchQuery = query(collection(db, 'posts'), where('text', '>=', searchText), where('text', '<=', searchText + '\uf8ff'));
+    getDocs(searchQuery).then((querySnapshot) => {
+      searchResults.innerHTML = '';
+      if (querySnapshot.empty) {
+        searchResults.innerHTML = '<p>No posts found.</p>';
+      } else {
+        querySnapshot.forEach((doc) => {
+          const postData = doc.data();
+          const postElement = document.createElement('div');
+          postElement.className = 'post-box';
+          postElement.innerHTML = `
+            ${postData.text}
+            <div class="timestamp">
+              <p>${formatTimestamp(postData.timestamp)}</p>
+              
+              <span class="like-count">${postData.likes || 0}</span>
+          
+              <button class="like-btn" onclick="likePost('${doc.id}', ${postData.likes || 0})" style="background: transparent; border: none; border-radius: 8px; color: #007bff; font-size: 10px; padding: 10px; width: 30px;">Like</button>
+          
+              <button class="comment-btn" onclick="openCommentPopup('${doc.id}')" style="background: #000; border: none; border-radius: 8px; color: white; font-size: 10px; padding: 10px; width: 70px;">Comment</button>
+          
+            </div>
+          `;
+          searchResults.appendChild(postElement);
+        });
+      }
+    }).catch((error) => {
+      console.error("Error searching posts: ", error);
+    });
+  }
+}
+
 // Expose functions to the global scope
 window.sendPost = sendPost;
 window.openPopup = openPopup;
@@ -154,6 +202,9 @@ window.likePost = likePost;
 window.openCommentPopup = openCommentPopup;
 window.closeCommentPopup = closeCommentPopup;
 window.sendComment = sendComment;
+window.openSearchPopup = openSearchPopup;
+window.closeSearchPopup = closeSearchPopup;
+window.searchPosts = searchPosts;
 
 // Fetch posts on page load
 window.onload = getPosts;
