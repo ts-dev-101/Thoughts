@@ -57,13 +57,39 @@ h1 {
   margin-bottom: 30px; /* Space between posts and input field */
 }
 
+
 .post-box {
-  background-color: #1e1e1e;
+  margin-bottom: 15px;
   padding: 15px;
-  border-radius: 10px;
-  min-height: 40px;
+  background-color: #1e1e1e; /* Default black background */
+  color: #ccc; /* Default gray text color */
+  border-radius: 5px;
+  border: 0px solid #444;
+  font-size: 14px;
+  transition: background-color 0.3s ease; /* Smooth transition for color change */
+  min-height: 60px;
   margin-bottom: 10px;
-  white-space: pre-wrap;
+  white-space: normal;
+}
+
+.post-box .timestamp {
+  font-size: 12px;
+  color: #888; /* Darker gray for timestamp */
+  margin-top: 20px;
+}
+
+.new-post {
+  background-color: #333; /* Darker background for new posts */
+}
+
+/* Optional: Add a subtle animation when a post is added */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.post-box {
+  animation: fadeIn 0.5s ease;
 }
 
 .timestamp {
@@ -73,7 +99,14 @@ h1 {
   color: #888;
   margin-top: 5px;
 }
-
+.comment-btn{
+  background: #000;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 10px;
+  padding: 10px;
+}
 .popup {
   display: none; /* Hidden by default */
   position: fixed;
@@ -91,6 +124,8 @@ h1 {
   padding: 25px;
   border-radius: 10px;
   width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
   text-align: center;
   position: relative;
 }
@@ -104,6 +139,7 @@ h1 {
   background-color: #2a2a2a;
   color: white;
   margin-bottom: 10px;
+  
 }
 
 .popup-content button {
@@ -114,6 +150,7 @@ h1 {
   background-color: #007bff;
   color: white;
   cursor: pointer;
+  
 }
 
 .popup-content button:hover {
@@ -128,6 +165,36 @@ h1 {
   cursor: pointer;
 }
 
+.comment-box {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #000;  /* Black background */
+  color: #ccc;  /* Light gray text color */
+  border-radius: 5px;
+  border: 1px solid #444;  /* Optional: Dark gray border */
+  font-size: 14px;
+  max-height: 150px; /* Set a max height */
+  overflow-y: auto;  /* Enable vertical scrolling if content overflows */
+}
+
+.comment-box::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.comment-box::-webkit-scrollbar-thumb {
+  background-color: #555; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+}
+
+.comment-box::-webkit-scrollbar-track {
+  background-color: #222; /* Background of the scrollbar track */
+}
+
+.comment-box .timestamp {
+  font-size: 12px;
+  color: #888;  /* Darker gray for timestamp */
+  margin-top: 5px;
+}
 
 .like-btn {
   background-color: transparent;
@@ -143,7 +210,7 @@ h1 {
 }
 
 .like-count {
-  margin-top: 5px;
+  margin-top: 9px;
   font-size: 12px;
   color: #888;
   margin-left: 0px;
