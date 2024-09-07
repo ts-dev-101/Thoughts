@@ -11,37 +11,32 @@
   <div class="container">
     <div class="header">
       <h1>Thoughts</h1>
-      
       <div class="topbutton">
         <button class="add-post-btn" onclick="openPopup()">+</button>
-        <!-- Add this in the header section -->
-      <button class="search-btn" onclick="openSearchPopup()">🔍</button>
-      
+        <button class="search-btn" onclick="openSearchPopup()">🔍</button>
       </div>
-      
     </div>
     <div id="posts-container">
       <!-- Posts will be dynamically added here -->
     </div>
   </div>
 
-<!-- Popup Form for Search -->
-<div id="search-popup" class="popup">
-  <div class="popup-content">
-    <span class="close-btn" onclick="closeSearchPopup()">&times;</span>
-    <input type="text" id="search-input" placeholder="Search for thoughts...">
-    <button onclick="searchPosts()">Search</button>
-    <div id="search-results">
-      
+  <!-- Popup Form for Search -->
+  <div id="search-popup" class="popup">
+    <div class="popup-content">
+      <span class="close-btn" onclick="closeSearchPopup()">&times;</span>
+      <input type="text" id="search-input" placeholder="Search for thoughts...">
+      <button onclick="searchPosts()">Search</button>
+      <div id="search-results"></div>
     </div>
   </div>
-</div>
   
   <!-- Popup Form for Adding Posts -->
   <div id="popup" class="popup">
     <div class="popup-content">
       <span class="close-btn" onclick="closePopup()">&times;</span>
-      <textarea id="popup-message" placeholder="Type your thoughts..." maxlength="10000" rows="10"></textarea>
+      <p class="sendThoughts">Share a thoughts</p>
+      <textarea id="popup-message" placeholder="Type your thoughts..." maxlength="10000" rows="100"></textarea>
       <button onclick="sendPost()">Post</button>
     </div>
   </div>
@@ -56,7 +51,6 @@
     </div>
   </div>
 
-  <!-- Firebase JS SDKs -->
-  <script type="module" src="app_comments.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
