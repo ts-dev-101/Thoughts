@@ -159,38 +159,65 @@ function closeSearchPopup() {
 }
 
 // Search posts based on input text
-function searchPosts() {
-  const searchText = document.getElementById('search-input').value.trim();
+async function searchPosts() {
+  const searchText = document.getElementById('search-input').value.trim().toLowerCase();
   const searchResults = document.getElementById('search-results');
+  searchResults.innerHTML = '';
 
-  if (searchText !== '') {
-    const searchQuery = query(collection(db, 'posts'), where('text', '>=', searchText), where('text', '<=', searchText + '\uf8ff'));
-    getDocs(searchQuery).then((querySnapshot) => {
-      searchResults.innerHTML = '';
-      if (querySnapshot.empty) {
-        searchResults.innerHTML = '<p>No posts found.</p>';
-      } else {
-        querySnapshot.forEach((doc) => {
-          const postData = doc.data();
+  if (searchText === '') {
+    searchResults.innerHTML = '<p>Please enter a search term.</p>';
+    return; // Exit if search input is empty
+  }
+
+  try {
+    // Fetch all posts from Firestore
+    const postsQuery = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+    const querySnapshot = await getDocs(postsQuery);
+
+    if (querySnapshot.empty) {
+      searchResults.innerHTML = '<p>No posts found.</p>';
+    } else {
+      let resultsFound = false;
+      querySnapshot.forEach((doc) => {
+        const postData = doc.data();
+        const postText = postData.text.toLowerCase();
+
+        // Check if post text includes the search term
+        if (postText.includes(searchText)) {
+          resultsFound = true;
           const postElement = document.createElement('div');
           postElement.className = 'post-box';
           postElement.innerHTML = `
-            ${postData.text}
+            ${highlightText(postData.text, searchText)}
             <div class="timestamp">
               <p>${formatTimestamp(postData.timestamp)}</p>
               <span class="like-count">${postData.likes || 0}</span>
+          
               <button class="like-btn" onclick="likePost('${doc.id}', ${postData.likes || 0})" style="background: transparent; border: none; border-radius: 8px; color: #007bff; font-size: 10px; padding: 10px; width: 30px;">Like</button>
+          
               <button class="comment-btn" onclick="openCommentPopup('${doc.id}')" style="background: #000; border: none; border-radius: 8px; color: white; font-size: 10px; padding: 10px; width: 70px;">Comment</button>
+          
             </div>
           `;
           searchResults.appendChild(postElement);
-        });
+        }
+      });
+
+      if (!resultsFound) {
+        searchResults.innerHTML = '<p>No posts found matching your criteria.</p>';
       }
-    }).catch((error) => {
-      console.error("Error searching posts: ", error);
-    });
+    }
+  } catch (error) {
+    console.error("Error searching posts:", error);
   }
 }
+
+// Function to highlight search terms in the text
+function highlightText(text, query) {
+  const regex = new RegExp(`(${query})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
 
 // Function to get user browser info and IP
 function getBrowserInfo() {
