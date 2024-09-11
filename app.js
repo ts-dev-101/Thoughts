@@ -223,6 +223,39 @@ function highlightText(text, query) {
   return text.replace(regex, '<mark>$1</mark>');
 }
 
+// Function to capture user's IP, browser info, and timestamp
+async function captureUserData() {
+  try {
+    // Get user IP address from an external API
+    const ipResponse = await fetch('https://api.ipify.org?format=json');
+    const ipData = await ipResponse.json();
+    const userIp = ipData.ip;
+
+    // Get browser information
+    const browserInfo = {
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      platform: navigator.platform,
+      vendor: navigator.vendor,
+    };
+
+    // Save IP, browser info, and timestamp to Firestore
+    await addDoc(collection(db, 'visit'), {
+      ip: userIp,
+      browserInfo: browserInfo,
+      timestamp: serverTimestamp()
+    });
+
+    console.log('User data captured and saved successfully.');
+
+  } catch (error) {
+    console.error('Error capturing user data:', error);
+  }
+}
+
+
+
+
 // Expose functions to the global scope
 window.sendPost = sendPost;
 window.openPopup = openPopup;
@@ -235,5 +268,13 @@ window.openSearchPopup = openSearchPopup;
 window.closeSearchPopup = closeSearchPopup;
 window.searchPosts = searchPosts;
 
+
+
 // Fetch posts on page load
-window.onload = getPosts;
+// window.onload = getPosts;
+
+
+window.onload = () => {
+    getPosts();
+    captureUserData()
+};
