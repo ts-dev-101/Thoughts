@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, updateDoc, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, serverTimestamp, doc, updateDoc, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -23,14 +23,17 @@ function formatTimestamp(timestamp) {
 }
 
 // Fetch posts and display them in reverse order
-function getPosts() {
+async function getPosts() {
   const postsContainer = document.getElementById('posts-container');
   const lastVisit = localStorage.getItem('lastVisit') || new Date().toISOString();  // Get last visit from localStorage
   localStorage.setItem('lastVisit', new Date().toISOString());  // Update last visit for next time
 
-  onSnapshot(query(collection(db, 'posts'), orderBy('timestamp', 'desc')), (snapshot) => {
+  try {
+    const postsQuery = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+    const querySnapshot = await getDocs(postsQuery);
+
     postsContainer.innerHTML = '';
-    snapshot.forEach((doc) => {
+    querySnapshot.forEach((doc) => {
       const postData = doc.data();
       const postElement = document.createElement('div');
       postElement.className = 'post-box';
@@ -55,9 +58,9 @@ function getPosts() {
 
     // Scroll to the top of the posts container
     postsContainer.scrollTop = 0;
-  }, (error) => {
-    console.error('Error fetching posts:', error);
-  });
+  } catch (error) {
+    console.error("Error fetching posts: ", error);
+  }
 }
 
 // Post a new thought
@@ -128,10 +131,11 @@ function sendComment() {
 }
 
 // Fetch and display comments for a specific post
-function getComments(postId) {
+async function getComments(postId) {
   const commentsContainer = document.getElementById('comments-container');
   const commentsQuery = query(collection(db, 'comments'), where('postId', '==', postId));
-  getDocs(commentsQuery).then((querySnapshot) => {
+  try {
+    const querySnapshot = await getDocs(commentsQuery);
     commentsContainer.innerHTML = '';
     querySnapshot.forEach((doc) => {
       const commentData = doc.data();
@@ -143,9 +147,9 @@ function getComments(postId) {
       `;
       commentsContainer.appendChild(commentElement);
     });
-  }).catch((error) => {
+  } catch (error) {
     console.error("Error fetching comments: ", error);
-  });
+  }
 }
 
 // Open the search popup
@@ -158,7 +162,6 @@ function closeSearchPopup() {
   document.getElementById('search-popup').style.display = 'none';
 }
 
-// Search posts based on input text
 async function searchPosts() {
   const searchText = document.getElementById('search-input').value.trim().toLowerCase();
   const searchResults = document.getElementById('search-results');
@@ -218,44 +221,6 @@ function highlightText(text, query) {
   return text.replace(regex, '<mark>$1</mark>');
 }
 
-
-// Function to get user browser info and IP
-function getBrowserInfo() {
-  const userAgent = navigator.userAgent;
-  const platform = navigator.platform;
-  return { userAgent, platform };
-}
-
-// Function to get IP address (requires a server-side solution, here we'll use a mock function)
-async function getIpAddress() {
-  try {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    return data.ip;
-  } catch (error) {
-    console.error('Error fetching IP:', error);
-    return 'Unknown IP';
-  }
-}
-
-// Save visitor data in Firestore
-async function saveVisitData() {
-  const { userAgent, platform } = getBrowserInfo();
-  const ip = await getIpAddress();
-  try {
-    await addDoc(collection(db, 'visit'), {
-      userAgent,
-      platform,
-      ip,
-      timestamp: serverTimestamp()
-    });
-    console.log('Visitor data saved successfully');
-  } catch (error) {
-    console.error('Error saving visitor data:', error);
-  }
-}
-
-
 // Expose functions to the global scope
 window.sendPost = sendPost;
 window.openPopup = openPopup;
@@ -268,13 +233,5 @@ window.openSearchPopup = openSearchPopup;
 window.closeSearchPopup = closeSearchPopup;
 window.searchPosts = searchPosts;
 
-
-
-
-// Save visitor data when the page loads
-window.onload = function() {
-  saveVisitData();
-};
-
-// Load posts when the page loads
-getPosts();
+// Fetch posts on page load
+window.onload = getPosts;
