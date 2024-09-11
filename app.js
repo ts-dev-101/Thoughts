@@ -64,6 +64,7 @@ async function getPosts() {
 }
 
 // Post a new thought
+// Post a new thought and reload the posting user's page
 function sendPost() {
   const message = document.getElementById('popup-message').value;
   if (message.trim() !== '') {
@@ -73,6 +74,7 @@ function sendPost() {
       likes: 0
     }).then(() => {
       closePopup();
+      window.location.reload(); // Reload the posting user's page only
     }).catch((error) => {
       console.error("Error adding document: ", error);
     });
